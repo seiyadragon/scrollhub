@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { ReactReader, ReactReaderStyle } from "react-reader";
 import React, { useState } from "react"
+import Head from "next/head";
 
 export async function getStaticPaths() {
     var res = await import("../../public/database.json")
@@ -44,14 +45,30 @@ export default function Book({books}) {
         ...ReactReaderStyle, arrow: {
             ...ReactReaderStyle.arrow,
             color: 'red',
-        },
+        }, readerArea: {
+            ...ReactReaderStyle.readerArea,
+            backgroundColor: 'rgb(66, 66, 66)',
+        }, tocArea: {
+            ...ReactReaderStyle.tocArea,
+            background: 'rgb(66, 66, 66)',
+        }, tocButtonExpanded: {
+            ...ReactReaderStyle.tocButtonExpanded,
+            background: 'rgb(33, 33, 33)'
+        }, titleArea: {
+            ...ReactReaderStyle.titleArea,
+            color: 'antiquewhite'
+        }
     }
 
     var book_url = "/books/" + resultBook.Text
 
     return (
         <div>
-            <div style={{ height: "100vh" }}>
+            <Head>
+                <title>{resultBook.Title}</title>
+            </Head>
+
+            <div style={{ height: "96vh" }}>
                 <ReactReader
                     location={location}
                     locationChanged={locationChanged}
@@ -59,6 +76,18 @@ export default function Book({books}) {
                     title={resultBook.Title}
                     styles={reactReaderStyle}
                     url={book_url}
+                    getRendition={(rendition) => {
+                        rendition.themes.register('custom', {
+                            "body": {
+                                "background-color": "rgb(33, 33, 33)",
+                                "color": "antiquewhite"
+                            },
+                            "a": {
+                                "color": "skyblue"
+                            }
+                        })
+                        rendition.themes.select('custom')
+                    }}
                 />
             </div>
         </div>

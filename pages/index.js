@@ -24,9 +24,9 @@ export async function getStaticProps() {
 export function Book({id, title, author, img}) {
   return (
     <div>
-      <a className={styles.book_link} href={"books/" + id}>
-        <img src={img}></img>
-      </a>
+        <a className={styles.book_link} href={"books/" + id}>
+          <img src={img}></img>
+        </a>
     </div>
   )
 }
