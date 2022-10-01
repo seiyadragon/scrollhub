@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {FaSearch} from 'react-icons/fa'
+import {FaUpload} from 'react-icons/fa'
+import { useState } from 'react'
 
 export async function getStaticProps() {
   var res = await import("../public/database.json")
@@ -32,6 +33,14 @@ export function Book({id, title, author, img}) {
 }
 
 export default function Home({books}) {
+  const [searchBarVal, setSearchBarVal] = useState('')
+
+  function searchBarOnChange(event) {
+    setSearchBarVal(event.target.value)
+  }
+
+  books.sort((a, b) => a.Title.localeCompare(b.Title))
+  
   return (
     <div>
       <Head>
@@ -40,15 +49,16 @@ export default function Home({books}) {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
 
-      <div className={styles.container}>
-        <input className={styles.search_bar} placeholder='Search for books'></input>
-        <button className={styles.search_button}><FaSearch /></button>
-      </div>
 
-      <div className={styles.container_two}>
+      <div className={styles.container}>
+        <div className={styles.search_container}>
+          <input className={styles.search_bar} placeholder='Search for books' value={searchBarVal} onChange={searchBarOnChange}></input>
+        </div>
+        
         <ul className={styles.book_list}>
           {books.map((book, i) => {
-            return <li><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
+            if (book.Title.toLowerCase().includes(searchBarVal.toLowerCase()))
+              return <li><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
           })}
         </ul>
       </div>

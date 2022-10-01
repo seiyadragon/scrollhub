@@ -40,5 +40,26 @@
         "Author": "Homer",
         "Text": "pg6130-images.epub",
         "Image": "https://www.gutenberg.org/cache/epub/6130/pg6130.cover.medium.jpg"
+    },
+    {
+        "Id": "354d91c3-94ab-4ccc-9789-797acd79d11b",
+        "Title": "Pride and Prejudice",
+        "Author": "Jane Austen",
+        "Text": "pg1342-images.epub",
+        "Image": "https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg"
+    },
+    {
+        "Id": "cd338f51-68d8-4d04-bc41-849b899048f3",
+        "Title": "Frankenstein; Or, The Modern Prometheus",
+        "Author": "Mary Wollstonecraft Shelley",
+        "Text": "pg84.epub",
+        "Image": "https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg"
+    },
+    {
+        "Id": "e00596e2-8723-429a-8a9d-02efa4e7d7a4",
+        "Title": "The Blue Castle: a novel",
+        "Author": "L. M. Montgomery",
+        "Text": "pg67979-images.epub",
+        "Image": "https://www.gutenberg.org/cache/epub/67979/pg67979.cover.medium.jpg"
     }
 ]
