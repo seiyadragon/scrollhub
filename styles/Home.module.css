@@ -3,6 +3,7 @@
   width: 50vw;
   padding-top: 5vh;
   display: flexbox;
+  transform: translate(0, -5vh);
 }
 
 .search_container {
@@ -27,6 +28,7 @@
   background-color: rgb(33, 33, 33);
   color: antiquewhite;
   border: none;
+  border-top: solid orange;
 }
 
 .search_bar:focus {
@@ -48,4 +50,10 @@
 
 .book_link img {
   width: 8vw;
+}
+
+.title {
+  width: 15vw;
+  margin-left: 15vw;
+  transform: translate(0, 1vh);
 }

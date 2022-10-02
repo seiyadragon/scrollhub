@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {FaUpload} from 'react-icons/fa'
 import { useState } from 'react'
 
 export async function getStaticProps() {
@@ -51,13 +50,14 @@ export default function Home({books}) {
 
 
       <div className={styles.container}>
+        <img className={styles.title} src="/scrollhub.png"></img>
         <div className={styles.search_container}>
           <input className={styles.search_bar} placeholder='Search for books' value={searchBarVal} onChange={searchBarOnChange}></input>
         </div>
         
         <ul className={styles.book_list}>
           {books.map((book, i) => {
-            if (book.Title.toLowerCase().includes(searchBarVal.toLowerCase()))
+            if (book.Title.toLowerCase().includes(searchBarVal.toLowerCase()) || book.Author.toLowerCase().includes(searchBarVal.toLowerCase()))
               return <li><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
           })}
         </ul>

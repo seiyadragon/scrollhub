@@ -1,0 +1,12 @@
+.back_button {
+    position: absolute;
+    z-index: 1000;
+    font-size: 2.5rem;
+    border: none;
+    color: gray;
+    transform: translate(0.3vw, -99.3vh);
+}
+
+.back_button:hover {
+    color: orange;
+}

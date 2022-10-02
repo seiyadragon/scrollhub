@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { ReactReader, ReactReaderStyle } from "react-reader";
 import React, { useState } from "react"
 import Head from "next/head";
+import styles from "../../styles/Book.module.css"
+import {FaHome} from 'react-icons/fa'
 
 export async function getStaticPaths() {
     var res = await import("../../public/database.json")
@@ -44,13 +46,13 @@ export default function Book({books}) {
     const reactReaderStyle = {
         ...ReactReaderStyle, arrow: {
             ...ReactReaderStyle.arrow,
-            color: 'red',
+            color: 'orange'
         }, readerArea: {
             ...ReactReaderStyle.readerArea,
-            backgroundColor: 'rgb(66, 66, 66)',
+            backgroundColor: 'rgb(66, 66, 66)'
         }, tocArea: {
             ...ReactReaderStyle.tocArea,
-            background: 'rgb(66, 66, 66)',
+            background: 'rgb(66, 66, 66)'
         }, tocButtonExpanded: {
             ...ReactReaderStyle.tocButtonExpanded,
             background: 'rgb(33, 33, 33)'
@@ -67,12 +69,11 @@ export default function Book({books}) {
             <Head>
                 <title>{resultBook.Title}</title>
             </Head>
-
-            <div style={{ height: "96vh" }}>
+            <div style={{ height: "100vh" }}>
                 <ReactReader
                     location={location}
                     locationChanged={locationChanged}
-                    showToc={true}
+                    showToc={false}
                     title={resultBook.Title}
                     styles={reactReaderStyle}
                     url={book_url}
@@ -83,13 +84,17 @@ export default function Book({books}) {
                                 "color": "antiquewhite"
                             },
                             "a": {
-                                "color": "skyblue"
-                            }
+                                "color": "orange"
+                            },
+                            "link": {
+                                "color": "orange"
+                            },
                         })
                         rendition.themes.select('custom')
                     }}
                 />
             </div>
+            <a className={styles.back_button} href='/'><FaHome /></a>
         </div>
     )
 }
