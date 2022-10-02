@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
     var res = await import("../../public/database.json")
     var data = res.default
-    
+
     return {
         props: {books: data}
     }
