@@ -1,65 +1,8 @@
 [
     {
-        "Id": "2daa1703-2a9d-42a5-b9e3-489700e955c9",
-        "Title": "Beyond Good and Evil",
-        "Author": "Friedrich Wilhelm Nietzsche",
-        "Text": "pg4363.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/4363/pg4363.cover.medium.jpg"
-    },
-    {
-        "Id": "cc282083-dfdd-4386-8817-0c6af1376a93",
-        "Title": "A Room with a View",
-        "Author": "E. M. Forster",
-        "Text": "pg2641.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/2641/pg2641.cover.medium.jpg"
-    },
-    {
-        "Id": "837f85c7-f5f2-418d-8578-915bc07db0d3",
-        "Title": "Middlemarch",
-        "Author": "George Eliot",
-        "Text": "pg145-images.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/145/pg145.cover.medium.jpg"
-    },
-    {
-        "Id": "e2e1ace1-f911-4d6c-83cf-c559d77f119b",
-        "Title": "Little Women; Or, Meg, Jo, Beth, and Amy",
-        "Author": "Louisa May Alcott",
-        "Text": "pg37106-images.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/37106/pg37106.cover.medium.jpg"
-    },
-    {
-        "Id": "9c1ec8cd-4f42-43bc-a199-ef5f4491c910",
-        "Title": "The Enchanted April",
-        "Author": "Elizabeth Von Arnim",
-        "Text": "pg16389.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/16389/pg16389.cover.medium.jpg"
-    },
-    {
-        "Id": "5f0115db-36ca-47e7-968c-c91dc74758dc",
-        "Title": "The Iliad",
-        "Author": "Homer",
-        "Text": "pg6130-images.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/6130/pg6130.cover.medium.jpg"
-    },
-    {
-        "Id": "354d91c3-94ab-4ccc-9789-797acd79d11b",
-        "Title": "Pride and Prejudice",
-        "Author": "Jane Austen",
-        "Text": "pg1342-images.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/1342/pg1342.cover.medium.jpg"
-    },
-    {
-        "Id": "cd338f51-68d8-4d04-bc41-849b899048f3",
-        "Title": "Frankenstein; Or, The Modern Prometheus",
-        "Author": "Mary Wollstonecraft Shelley",
-        "Text": "pg84.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/84/pg84.cover.medium.jpg"
-    },
-    {
-        "Id": "e00596e2-8723-429a-8a9d-02efa4e7d7a4",
-        "Title": "The Blue Castle: a novel",
-        "Author": "L. M. Montgomery",
-        "Text": "pg67979-images.epub",
-        "Image": "https://www.gutenberg.org/cache/epub/67979/pg67979.cover.medium.jpg"
+        "Id": "dfd4d6e8-1636-41a1-b507-ba62fac0f5f0",
+        "Title": "The Declaration of Independence of the United States of America",
+        "Text": "https://www.gutenberg.org/files/1/1-h/1-h.htm",
+        "Image": "https://www.gutenberg.org/cache/epub/1/pg1.cover.medium.jpg"
     }
 ]

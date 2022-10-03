@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
 
@@ -8,14 +7,32 @@ export async function getStaticProps() {
   var data = res.default
   var crypto = require('crypto')
 
-  data.map((book, i) => {
-    if (book.Id == "") {
-      book.Id = crypto.randomUUID()
-      const fs = require('fs')
-      fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
+  if (data.length > 0)
+    data.map((book, i) => {
+      if (book.Id == "") {
+        book.Id = crypto.randomUUID()
+        const fs = require('fs')
+        fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
+      }
+    })
+  else {
+    var gutendexCount = await fetch("https://gutendex.com/books").count
+    for (var i = 1; i < gutendexCount; i++) {
+      var gutendex = await fetch("https://gutendex.com/books/" + i)
+      var book = {
+        "Id": "crypto.randomUUID()",
+        "Title": "gutendex.title",
+        "Text": "gutendex.formats.text/html",
+        "Image": "gutendex.formats.image/jpeg"
+      }
+      
+      data.push(book)
     }
-  })
-
+    
+    const fs = require('fs')
+    fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
+  }
+  
   return {
     props: {books: data}
   }
