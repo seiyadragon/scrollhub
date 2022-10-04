@@ -7,7 +7,7 @@ export async function getStaticProps() {
   var data = res.default
   var crypto = require('crypto')
 
-  if (data.length > 0)
+  if (data.length > 0) {
     data.map((book, i) => {
       if (book.Id == "") {
         book.Id = crypto.randomUUID()
@@ -15,15 +15,18 @@ export async function getStaticProps() {
         fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
       }
     })
+  }
   else {
-    var gutendexCount = await fetch("https://gutendex.com/books").count
-    for (var i = 1; i < gutendexCount; i++) {
+    data = []
+
+    var gutendexCount = await fetch("https://gutendex.com/books")
+    for (var i = 1; i < 10; i++) {
       var gutendex = await fetch("https://gutendex.com/books/" + i)
-      var book = {
-        "Id": "crypto.randomUUID()",
-        "Title": "gutendex.title",
-        "Text": "gutendex.formats.text/html",
-        "Image": "gutendex.formats.image/jpeg"
+      const book = {
+        "Id": crypto.randomUUID(),
+        "Title": gutendex.title,
+        "Text": gutendex.formats[4],
+        "Image": gutendex.formats[5]
       }
       
       data.push(book)
