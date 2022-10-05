@@ -1,41 +1,44 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
+import { FaGreaterThan, FaLessThan } from 'react-icons/fa'
 
 export async function getStaticProps() {
   var res = await import("../public/database.json")
   var data = res.default
   var crypto = require('crypto')
+  var bookCount = 68992
 
-  if (data.length > 0) {
-    data.map((book, i) => {
-      if (book.Id == "") {
-        book.Id = crypto.randomUUID()
-        const fs = require('fs')
-        fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
-      }
-    })
-  }
-  else {
-    data = []
-
-    var gutendexCount = await fetch("https://gutendex.com/books")
-    for (var i = 1; i < 10; i++) {
-      var gutendex = await fetch("https://gutendex.com/books/" + i)
-      const book = {
-        "Id": crypto.randomUUID(),
-        "Title": gutendex.title,
-        "Text": gutendex.formats[4],
-        "Image": gutendex.formats[5]
-      }
+  if (data.length === 0) {
+    for (var i = data.length; i < bookCount; i++) {
+      var gutendex, book 
       
-      data.push(book)
+      try {
+        gutendex = await (await fetch("https://gutendex.com/books/" + i)).json()
+
+        book = {
+          "Id": crypto.randomUUID(),
+          "Title": gutendex.title,
+          "Author": gutendex.authors[0].name,
+          "Text": gutendex.formats['text/html'],
+          "Image": gutendex.formats['image/jpeg']
+        }
+
+        if (book.Title.typeof === 'undefined' || book.Author.typeof === 'undefined' || book.Text.typeof === 'undefined' || book.Image.typeof === 'undefined') {
+          continue
+        }
+
+        data.push(book)
+        console.log(i + ": " + book.Title + " Added!")
+      } catch (error) {
+        continue
+      }
     }
-    
+
     const fs = require('fs')
     fs.writeFileSync("public/database.json", JSON.stringify(data, null, 4))
   }
-  
+
   return {
     props: {books: data}
   }
@@ -53,13 +56,30 @@ export function Book({id, title, author, img}) {
 
 export default function Home({books}) {
   const [searchBarVal, setSearchBarVal] = useState('')
+  const [booksRange, setBooksRange] = useState({index: 0, range: 23})
 
   function searchBarOnChange(event) {
     setSearchBarVal(event.target.value)
   }
+  
+  function nextPage() {
+    if (booksRange.index + booksRange.range <= searchBooks.length)
+    setBooksRange({index: booksRange.index + booksRange.range + 1, range: booksRange.range})
+  }
+  
+  function prevPage() {
+    if (booksRange.index - booksRange.range >= 0)
+    setBooksRange({index: booksRange.index - booksRange.range - 1, range: booksRange.range})
+  }
 
   books.sort((a, b) => a.Title.localeCompare(b.Title))
-  
+
+  var searchBooks = []
+  books.map((book, i) => {
+    if (searchBarVal === "" || book.Title.toLowerCase().includes(searchBarVal.toLowerCase()) || book.Author.toLowerCase().includes(searchBarVal.toLowerCase()))
+      searchBooks.push(book)
+  })
+
   return (
     <div>
       <Head>
@@ -68,17 +88,23 @@ export default function Home({books}) {
         <link rel="icon" href="/favicon.ico"/>
       </Head>
 
-
       <div className={styles.container}>
         <img className={styles.title} src="/scrollhub.png"></img>
         <div className={styles.search_container}>
           <input className={styles.search_bar} placeholder='Search for books' value={searchBarVal} onChange={searchBarOnChange}></input>
         </div>
+
+        <div className={styles.page_nav}>
+          <button onClick={prevPage}><FaLessThan /></button>
+          <h1>{parseInt(booksRange.index / booksRange.range)}</h1>
+          <button onClick={nextPage}><FaGreaterThan /></button>
+        </div>
         
         <ul className={styles.book_list}>
-          {books.map((book, i) => {
-            if (book.Title.toLowerCase().includes(searchBarVal.toLowerCase()) || book.Author.toLowerCase().includes(searchBarVal.toLowerCase()))
-              return <li><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
+          {searchBooks.map((book, i) => {
+            if (i >= booksRange.index && i <= booksRange.index + booksRange.range) {
+              return <li key={book.Id}><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
+            }
           })}
         </ul>
       </div>
