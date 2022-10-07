@@ -96,7 +96,7 @@ export default function Home({books}) {
 
         <div className={styles.page_nav}>
           <button onClick={prevPage}><FaLessThan /></button>
-          <h1>{parseInt(booksRange.index / booksRange.range)}</h1>
+          <h1>{parseInt(booksRange.index / booksRange.range + 1)}</h1>
           <button onClick={nextPage}><FaGreaterThan /></button>
         </div>
         
