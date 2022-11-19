@@ -1,71 +1,62 @@
-.container {
-  margin: auto;
-  width: 50vw;
-  padding-top: 5vh;
-  display: flexbox;
-  transform: translate(0, -5vh);
+@keyframes hoverAnimation {
+  from {
+    transform: scale(1.0, 1.0);
+  }
+  to {
+    transform: scale(1.5, 1.5);
+  }
 }
 
-.search_container {
-  display: grid;
-  grid-template-columns: 50vw;
+@keyframes hoverAnimationRev {
+  from {
+    transform: scale(1.5, 1.5);
+  }
+  to {
+    transform: scale(1.0, 1.0);
+  }
 }
 
-.search_bar {
-  width: 100%;
-  font-size: 5vw;
-  background-color: rgb(33, 33, 33);
+.navigation {
+  background-color: black;
   color: antiquewhite;
-  border: none;
-  border-top: solid orange;
-}
-
-.search_bar:focus {
-  outline: none;
-}
-
-.book_list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: 8.5vw 8.4vw 8.4vw 8.4vw 8.5vw 8.5vw;
-  row-gap: 2vh;
-  padding-left: 0;
-}
-
-.book_link {
-  color: black;
-  text-decoration: none;
-}
-
-.book_link img {
-  width: 8vw;
-}
-
-.title {
-  width: 15vw;
-  margin-left: 15vw;
-  transform: translate(0, 1vh);
-}
-
-.page_nav {
-  display: grid;
-  grid-template-columns: 16.66667vw 16.9vw 16.66667vw;
-  background-color: rgb(33, 33, 33);
-}
-
-.page_nav button {
-  background-color: rgb(33, 33, 33);
-  font-size: 3vw;
-  color: gray;
-  border: none;
-}
-
-.page_nav button:hover {
-  background-color: rgb(45, 45, 45);
-}
-
-.page_nav h1 {
   text-align: center;
-  color: gray;
-  font-size: 2vw;
+  font-size: clamp(16px, 5vw, 32px);
+  position: sticky;
+  border-bottom: 3px solid orange;
+}
+
+.linkIcon {
+  margin: 16px;
+  animation: hoverAnimationRev 0.5s;
+  transform: scale(1, 1);
+}
+
+.linkIcon:hover {
+  animation: hoverAnimation 0.5s;
+  transform: scale(1.5, 1.5);
+}
+
+.contentWrapper {
+  background-image: url("/books_background.jpg");
+  background-size: cover;
+}
+
+.contentWrapperBackdrop {
+  backdrop-filter: blur(7px);
+  height: 92vh;
+}
+
+.content {
+  width: 50vw;
+  margin: auto;
+  color: antiquewhite;
+  font-size: 24px;
+  text-align: center;
+}
+
+.logo {
+  width: 100%;
+  height: clamp(155px, 25vw, 800px);
+  background-image: url("/scrollhub.png");
+  background-size: cover;
 }
