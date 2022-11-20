@@ -21,8 +21,10 @@
   color: antiquewhite;
   text-align: center;
   font-size: clamp(16px, 5vw, 32px);
-  position: sticky;
   border-bottom: 3px solid orange;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .linkIcon {
@@ -59,4 +61,10 @@
   height: clamp(155px, 25vw, 800px);
   background-image: url("/scrollhub.png");
   background-size: cover;
+}
+
+@media all and (max-width: 600px) {
+  .logo {
+    transform: scale(1.5, 1.5);
+  }
 }

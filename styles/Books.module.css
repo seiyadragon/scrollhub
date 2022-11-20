@@ -1,4 +1,69 @@
+@keyframes hoverAnimation {
+  from {
+    transform: scale(1.0, 1.0);
+  }
+  to {
+    transform: scale(1.05, 1.05);
+  }
+}
+
+@keyframes hoverAnimationRev {
+  from {
+    transform: scale(1.05, 1.05);
+  }
+  to {
+    transform: scale(1.0, 1.0);
+  }
+}
+
 .container {
     width: 50vw;
     margin: auto;
+}
+
+.book_list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 25%);
+    width: 50vw;
+    margin: auto;
+}
+
+.book {
+    margin-bottom: 2.5vh;
+}
+
+.bookContainer {
+    animation: hoverAnimationRev 1.5s;
+}
+
+.bookContainer:hover {
+    animation: hoverAnimation 1.5s;
+    transform: scale(1.05, 1.05);
+}
+
+.bookImage {
+    width: 80%;
+    height: clamp(280px, 30vh, 200px);
+    background-size: cover;
+    border: 2px solid orange;
+}
+
+.noImageBook {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: black;
+    background-color: antiquewhite;
+    height: 100%;
+}
+
+@media all and (min-width: 600px) and (max-width: 1000px) {
+    .book_list {
+        grid-template-columns: repeat(auto-fit, 50%);
+    }
+}
+
+@media all and (max-width: 600px) {
+    .book_list {
+        grid-template-columns: 100%;
+    }
 }

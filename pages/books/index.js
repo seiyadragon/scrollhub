@@ -4,40 +4,56 @@ import { useState } from 'react'
 import { FaGreaterThan, FaLessThan } from 'react-icons/fa'
 import Link from 'next/link'
 import { LogoImage, NavBar } from '..'
+import { createClient } from '@supabase/supabase-js'
 
-export async function getStaticProps() {
-  console.log(process.env.SUPABASE_URL)
-  
+const supabase = createClient("https://psffjnyfrkdpfafzdiwg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzZmZqbnlmcmtkcGZhZnpkaXdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg4Nzc1MzAsImV4cCI6MTk4NDQ1MzUzMH0.NPyCh_ZYc4nOzKsQtwF6GK8q6c8yjpkxZty5et4LzIE")
+
+export async function getServerSideProps(context) {
+  let {data, error} = await supabase.from("Books").select('*').eq("page", context.query.page)
+
   return {
-    props: {books: null}
+    props: {
+      books: data
+    }
   }
 }
 
-export function Book({id, title, author, img}) {
+export function Book({book}) {
+
+  let imageNull = false
+  if (book.formats["image/jpeg"] == null)
+    imageNull = true
+
   return (
-    <div>
-        <Link className={styles.book_link} href={"books/" + id}>
-          <img src={img}></img>
+    <section className={styles.bookContainer}>
+        <Link className={styles.book_link} href={"books/" + book.id}>
+          <section className={styles.bookImage} style={{'backgroundImage': `url(${book.formats["image/jpeg"]})`}}>
+            {book.formats["image/jpeg"] == null &&
+              <section className={styles.noImageBook}>
+                {book.title != null && <span>{book.title}</span>}
+                <br/>
+                {book.authors[0] != null && <span>{book.authors[0].name}</span>}
+                <br/>
+                {book.translators[0] != null && <span>{book.translators[0].name}</span>}
+              </section>} 
+          </section>
         </Link>
-    </div>
+    </section>
   )
 }
 
 export default function Books({books}) {
-  books.sort((a, b) => a.Title.localeCompare(b.Title))
-
   return (
-    <div>
+    <section>
       <NavBar title="Books" />
-
-      <div className={styles.container}>
+      <section className={styles.container}>
         <LogoImage />
         <ul className={styles.book_list}>
           {books.map((book, i) => {
-              return <li key={book.Id}><Book id={book.Id} title={book.Title} author={book.Author} img={book.Image}/></li>
+              return <li key={book.id} className={styles.book}><Book book={book}/></li>
           })}
         </ul>
-      </div>
-    </div>
+      </section>
+    </section>
   )
 }

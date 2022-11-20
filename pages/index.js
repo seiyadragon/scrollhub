@@ -14,7 +14,7 @@ export function NavBar({title}) {
             <Link href="/">
                 <FaHome className={styles.linkIcon} />
             </Link>
-            <Link href="/books">
+            <Link href="/books?page=1">
                 <FaBook className={styles.linkIcon} />
             </Link>
         </section>
