@@ -56,6 +56,12 @@
     height: 100%;
 }
 
+@media all and (min-width: 1000px) and (max-width: 1600px) {
+  .book_list {
+      grid-template-columns: repeat(auto-fit, 33%);
+  }
+}
+
 @media all and (min-width: 600px) and (max-width: 1000px) {
     .book_list {
         grid-template-columns: repeat(auto-fit, 50%);
