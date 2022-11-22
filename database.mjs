@@ -8,13 +8,13 @@ async function run() {
     
     while (gutendex.next != null) {
         pageCounter++
-        console.log(pageCounter)
+        console.log("page" + pageCounter)
         addPage(gutendex, pageCounter)
         gutendex = await (await fetch(gutendex.next)).json()
     }
 
     pageCounter++
-    console.log(pageCounter)
+    console.log("page" + pageCounter)
     addPage(gutendex, pageCounter)
 
     await supabase.from("Books").insert({
