@@ -4,27 +4,27 @@ const supabase = createClient("https://psffjnyfrkdpfafzdiwg.supabase.co", "eyJhb
 
 async function run() {
     let gutendex = await (await fetch("https://gutendex.com/books/")).json()
+    let pageCounter = 0
     
     while (gutendex.next != null) {
-        gutendex.results.map(async (book, index) => {
-            await supabase.from("Books").insert({
-                id: book.id,
-                title: book.title,
-                authors: book.authors,
-                translators: book.translators,
-                subjects: book.subjects,
-                bookshelves: book.bookshelves,
-                languages: book.languages,
-                copyright: book.copyright,
-                formats: book.formats,
-                page: index + 1
-            })
-            console.log(book)
-        })
-
+        pageCounter++
+        console.log(pageCounter)
+        addPage(gutendex, pageCounter)
         gutendex = await (await fetch(gutendex.next)).json()
     }
 
+    pageCounter++
+    console.log(pageCounter)
+    addPage(gutendex, pageCounter)
+
+    await supabase.from("Books").insert({
+        id: -69,
+        page: pageCounter
+    })
+
+}
+
+function addPage(gutendex, page) {
     gutendex.results.map(async (book, index) => {
         await supabase.from("Books").insert({
             id: book.id,
@@ -36,7 +36,7 @@ async function run() {
             languages: book.languages,
             copyright: book.copyright,
             formats: book.formats,
-            page: index + 1
+            page: page
         })
         console.log(book)
     })

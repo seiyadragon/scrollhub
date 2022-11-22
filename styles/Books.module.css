@@ -56,6 +56,16 @@
     height: 100%;
 }
 
+.pageSelector {
+  
+  width: 50vw;
+  margin: auto;
+  color: antiquewhite;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 20%);
+  margin-bottom: 10vh;
+}
+
 @media all and (min-width: 1000px) and (max-width: 1600px) {
   .book_list {
       grid-template-columns: repeat(auto-fit, 33%);
