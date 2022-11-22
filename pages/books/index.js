@@ -1,7 +1,4 @@
-import Head from 'next/head'
 import styles from '../../styles/Books.module.css'
-import { useState } from 'react'
-import { FaCross, FaExclamationCircle, FaGreaterThan, FaLessThan } from 'react-icons/fa'
 import Link from 'next/link'
 import { LogoImage, NavBar } from '..'
 import { createClient } from '@supabase/supabase-js'
@@ -49,28 +46,28 @@ export function Book({book}) {
 export function PageSelector({page, pageCount}) {
   return (
     <section className={styles.pageSelector}>
-      <Link href={'/books?page=1'} className={styles.pageSelectorItem}>
-        <span>1</span>
+      <Link href={'/books?page=1'} scroll={false}>
+        <span className={`${styles.pageSelectorItem} ${styles.pageSelectorItemOutside}`}>1</span>
       </Link>
 
       {page > 1 ? 
-        <Link href={'/books?page=' + (page - 1)} className={styles.pageSelectorItem}>
-          <span>{page - 1}</span>
+        <Link href={'/books?page=' + (page - 1)} scroll={false}>
+          <span className={styles.pageSelectorItem}>{page - 1}</span>
         </Link>
       :
-        <span className={styles.pageSelectorItem}></span>}
+        <span></span>}
 
-      <span className={styles.pageSelectorItem}>{page}</span>
+      <span className={`${styles.pageSelectorItem} ${styles.pageSelectorItemCenter}`}>{page}</span>
 
       {page <= pageCount ?
-        <Link href={'/books?page=' + (parseInt(page) + 1)} className={styles.pageSelectorItem}>
-          <span>{(parseInt(page) + 1)}</span>
+        <Link href={'/books?page=' + (parseInt(page) + 1)} scroll={false}>
+          <span className={styles.pageSelectorItem}>{(parseInt(page) + 1)}</span>
         </Link>
         :
-          <span className={styles.pageSelectorItem}></span>}
+          <span></span>}
 
-        <Link href={'/books?page=' + pageCount} className={styles.pageSelectorItem}>
-          <span>{pageCount}</span>
+        <Link href={'/books?page=' + (parseInt(pageCount) - 1)} scroll={false}>
+          <span className={`${styles.pageSelectorItem} ${styles.pageSelectorItemOutside}`}>{parseInt(pageCount) - 1}</span>
         </Link>
       
     </section>
@@ -85,10 +82,13 @@ export default function Books({books, page, pageCount}) {
         <LogoImage />
         <PageSelector page={page} pageCount={pageCount}/>
         <ul className={styles.book_list}>
-          {books.map((book, i) => {
+          <section className={styles.bookListInner}>
+            {books.map((book, i) => {
               return <li key={book.id} className={styles.book}><Book book={book}/></li>
-          })}
+            })}
+          </section>
         </ul>
+        <PageSelector page={page} pageCount={pageCount}/>
       </section>
     </section>
   )

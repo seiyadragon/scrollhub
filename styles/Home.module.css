@@ -29,12 +29,10 @@
 
 .linkIcon {
   margin: 16px;
-  animation: hoverAnimationRev 0.5s;
-  transform: scale(1, 1);
+  transition: transform 0.5s;
 }
 
 .linkIcon:hover {
-  animation: hoverAnimation 0.5s;
   transform: scale(1.5, 1.5);
 }
 
