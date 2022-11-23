@@ -72,6 +72,10 @@
   color: indigo;
 }
 
+.pageSelectorItemCenter:hover {
+  transform: scale(1, 1);
+}
+
 .pageSelectorItemOutside {
   color: darkred;
 }
