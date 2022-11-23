@@ -1,52 +1,31 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react"
-import Head from "next/head";
 import styles from "../../styles/Book.module.css"
-import {FaHome} from 'react-icons/fa'
+import { createClient } from '@supabase/supabase-js'
+import { LogoImage, NavBar } from ".."
 
-export async function getStaticPaths() {
-    var res = await import("../../public/database.json")
-    var data = res.default
-    var ids = []
+const supabase = createClient("https://psffjnyfrkdpfafzdiwg.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzZmZqbnlmcmtkcGZhZnpkaXdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg4Nzc1MzAsImV4cCI6MTk4NDQ1MzUzMH0.NPyCh_ZYc4nOzKsQtwF6GK8q6c8yjpkxZty5et4LzIE")
 
-    data.map((book, i) => {
-        ids.push({params: { id: book.Id } })
-    })
+export async function getServerSideProps(context) {
+    var {data, error} = await supabase.from("Books").select('*').eq("id", context.query.id)
+
+    var text = await fetch(data[0].formats["text/html"])
+
+    console.log(text)
 
     return {
-        paths: ids,
-        fallback: false
+        props: {book: data[0]}
     }
 }
 
-export async function getStaticProps() {
-    var res = await import("../../public/database.json")
-    var data = res.default
-
-    return {
-        props: {books: data}
-    }
-}
-
-export default function Book({books}) {
-    var router = useRouter()
-    var {id} = router.query
-    var resultBook
-
-    books.map((book, i) => {
-        if (book.Id == id) 
-            resultBook = book
-    })
-
+export default function Book({book}) {
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>{resultBook.Title}</title>
-            </Head>
-            <div className={styles.frame_container}>
-                <iframe className={styles.book} scrolling="yes" src={resultBook.Text}></iframe>
-            </div>
-            <a className={styles.back_button} href='/'><FaHome /></a>
-        </div>
+        <main>
+            <NavBar />
+            <section className={styles.content}>
+                <LogoImage />
+                <section className={styles.bookText}>
+                    <iframe className={styles.bookTextFrame} scrolling="no" src={book.formats["text/html"]} />
+                </section>
+            </section>
+        </main>
     )
 }

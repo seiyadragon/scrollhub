@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
   let {data: pageCount, error2} = await supabase.from("Books").select().eq("id", -69)
 
   return {
-    props: {
+  	props: {
       books: data,
       page: page,
       pageCount: pageCount[0].page
@@ -31,7 +31,7 @@ export function Book({book}) {
           <section className={styles.bookImage} style={{'backgroundImage': `url(${book.formats["image/jpeg"]})`}}>
             {book.formats["image/jpeg"] == null &&
               <section className={styles.noImageBook}>
-                {book.title != null && <span>{book.title}</span>}
+            	{book.title != null && <span>{book.title}</span>}
                 <br/>
                 {book.authors[0] != null && <span>{book.authors[0].name}</span>}
                 <br/>
@@ -69,6 +69,7 @@ export function PageSelector({page, pageCount}) {
         <Link href={'/books?page=' + (parseInt(pageCount) - 1)} scroll={false}>
           <span className={`${styles.pageSelectorItem} ${styles.pageSelectorItemOutside}`}>{parseInt(pageCount) - 1}</span>
         </Link>
+		
       
     </section>
   )
@@ -76,7 +77,7 @@ export function PageSelector({page, pageCount}) {
 
 export default function Books({books, page, pageCount}) {
   return (
-    <section>
+    <main>
       <NavBar title="Books" />
       <section className={styles.container}>
         <LogoImage />
@@ -90,6 +91,6 @@ export default function Books({books, page, pageCount}) {
         </ul>
         <PageSelector page={page} pageCount={pageCount}/>
       </section>
-    </section>
+    </main>
   )
 }
