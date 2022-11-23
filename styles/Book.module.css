@@ -1,12 +1,10 @@
 .content {
     width: 50vw;
     margin: auto;
-    overflow-y: visible;
 }
 
 .bookText {
     border: solid orange 3px;
-    overflow-y: visible;
     height: auto;
 }
 

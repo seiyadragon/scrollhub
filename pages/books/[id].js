@@ -1,6 +1,7 @@
 import styles from "../../styles/Book.module.css";
 import { createClient } from "@supabase/supabase-js";
 import { LogoImage, NavBar } from "..";
+import $ from 'jquery'
 
 const supabase = createClient(
   "https://psffjnyfrkdpfafzdiwg.supabase.co",
@@ -13,12 +14,13 @@ export async function getServerSideProps(context) {
     .select("*")
     .eq("id", context.query.id);
 
-  var text = await (await fetch(data[0].formats["text/html"])).text();
+  var text = $(await (await fetch(data[0].formats["text/plain"])).text());
+  text.find("style").replaceWith("")
 
   return {
     props: { 
         book: data[0],
-        bookText: text,
+        bookText: text.html(),
     }
   };
 }
@@ -30,7 +32,7 @@ export default function Book({ book, bookText }) {
       <section className={styles.content}>
         <LogoImage />
         <section className={styles.bookText}>
-            <section dangerouslySetInnerHTML={{__html: bookText}} />
+          <section>{bookText}</section>
         </section>
       </section>
     </main>
