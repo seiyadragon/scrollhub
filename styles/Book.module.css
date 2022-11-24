@@ -5,7 +5,11 @@
 
 .bookText {
     border: solid orange 3px;
+    border-radius: 32px;
     height: auto;
+    background-color: burlywood;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 .bookTextFrame {
@@ -17,6 +21,7 @@
 
 .bookTextInner p, .bookTextInner h1, .bookTextInner h2, .bookTextInner h3,
 .bookTextInner h4, .bookTextInner h5, .bookTextInner h6, .bookTextInner span, 
-.bookTextInner div, .bookTextInner a {
-    color: blanchedalmond;
+.bookTextInner div, .bookTextInner a, .bookTextInner table, .bookTextInner li {
+    color: rgb(66, 66, 66);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
