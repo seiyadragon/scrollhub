@@ -14,3 +14,7 @@
     overflow-y: hidden;
     border: none;
 }
+
+.content p {
+    color: antiquewhite;
+}

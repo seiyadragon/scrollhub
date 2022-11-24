@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
     .eq("id", context.query.id);
 
   var text = await (await fetch(data[0].formats["text/html"])).text();
-  text = text.replace(/<style>.*<\/style>/, '<style><\/style> ')
+  text = text.replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/g, '<--No More Styles-->')
 
   return {
     props: { 
@@ -31,7 +31,7 @@ export default function Book({ book, bookText }) {
       <section className={styles.content}>
         <LogoImage />
         <section className={styles.bookText}>
-          <section>{bookText}</section>
+          <section dangerouslySetInnerHTML={{__html: bookText}}/>
         </section>
       </section>
     </main>
