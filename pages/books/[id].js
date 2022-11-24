@@ -1,7 +1,6 @@
 import styles from "../../styles/Book.module.css";
 import { createClient } from "@supabase/supabase-js";
 import { LogoImage, NavBar } from "..";
-import dynamic from "next/dynamic";
 
 const supabase = createClient(
   "https://psffjnyfrkdpfafzdiwg.supabase.co",
@@ -15,6 +14,7 @@ export async function getServerSideProps(context) {
     .eq("id", context.query.id);
 
   var text = await (await fetch(data[0].formats["text/html"])).text();
+  text = text.replace(/<style>.*<\/style>/, '<style><\/style> ')
 
   return {
     props: { 
@@ -25,12 +25,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Book({ book, bookText }) {
-  var $ = dynamic(async () => (await import('jquery')).default, {
-    ssr: false
-  })
-  
-  var jqText = $(bookText)
-
   return (
     <main>
       <NavBar title={book.title}/>
