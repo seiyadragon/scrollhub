@@ -18,8 +18,8 @@ export async function getServerSideProps(context) {
 
   return {
     props: { 
-        book: data[0],
-        bookText: text,
+      book: data[0],
+      bookText: text,
     }
   };
 }
@@ -31,7 +31,7 @@ export default function Book({ book, bookText }) {
       <section className={styles.content}>
         <LogoImage />
         <section className={styles.bookText}>
-          <section dangerouslySetInnerHTML={{__html: bookText}}/>
+          <section className={styles.bookTextInner} dangerouslySetInnerHTML={{__html: bookText}}/>
         </section>
       </section>
     </main>
