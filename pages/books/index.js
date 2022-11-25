@@ -98,6 +98,22 @@ export function PageSelector({ page, pageCount }) {
   );
 }
 
+export function BookList({books}) {
+  return (
+    <ul className={styles.book_list}>
+      <section className={styles.bookListInner}>
+        {books.map((book, i) => {
+          return (
+            <li key={book.id} className={styles.book}>
+              <Book book={book} />
+            </li>
+          );
+        })}
+      </section>
+    </ul>
+  )
+}
+
 export default function Books({ books, page, pageCount }) {
   return (
     <main>
@@ -105,17 +121,7 @@ export default function Books({ books, page, pageCount }) {
       <section className={styles.container}>
         <LogoImage />
         <PageSelector page={page} pageCount={pageCount} />
-        <ul className={styles.book_list}>
-          <section className={styles.bookListInner}>
-            {books.map((book, i) => {
-              return (
-                <li key={book.id} className={styles.book}>
-                  <Book book={book} />
-                </li>
-              );
-            })}
-          </section>
-        </ul>
+        <BookList books={books} />
         <PageSelector page={page} pageCount={pageCount} />
       </section>
     </main>

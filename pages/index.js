@@ -12,13 +12,19 @@ export function NavBar({ title }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Link href="/">
-        <FaHome className={styles.linkIcon} />
+        <span>
+          <FaHome className={styles.linkIcon} />
+        </span>
       </Link>
       <Link href="/books?page=1">
-        <FaBook className={styles.linkIcon} />
+        <span>
+          <FaBook className={styles.linkIcon} />
+        </span>
       </Link>
       <Link href="/search">
-        <FaSearch className={styles.linkIcon} />
+        <span>
+          <FaSearch className={styles.linkIcon} />
+        </span>
       </Link>
     </section>
   );

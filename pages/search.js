@@ -2,6 +2,8 @@ import styles from "../styles/Search.module.css";
 import { createClient } from "@supabase/supabase-js";
 import { LogoImage, NavBar } from ".";
 import { useState } from "react";
+import { BookList, PageSelector } from "./books";
+import { useRouter } from "next/router";
 
 const supabase = createClient(
 	"https://psffjnyfrkdpfafzdiwg.supabase.co",
@@ -9,25 +11,48 @@ const supabase = createClient(
 );
 
 export async function getServerSideProps(context) {
-    let pageValue = context.query.page == null ? null : context.query.page
+    let searchValue = context.query.search == null ? null : context.query.search
+    let {data, error} = supabase.from("Books").select("*")
+
+    let matchedBooks = []
+    data.map((value) => {
+        if (value.title.includes(search)) {
+            sortedBooks.push(value)
+        }
+        for (author in value.authors) {
+            if (author.includes(search)) {
+                sortedBooks.push(value)
+                break
+            }
+        }
+    })
+
+    console.log(matchedBooks)
 
     return {
         props: {
-            page: pageValue
+            search: searchValue,
+            books: matchedBooks,
         }
     }
 }
 
-export default function Search({page}) {
-    var [searchValue, setSearchValue] = useState()
+export default function Search({search, books}) {
+    let [searchValue, setSearchValue] = useState("")
+    let router = useRouter()
 
     function onSearchChange(event) {
         setSearchValue(event.target.value)
     }
 
+    function onSearchSubmit(event) {
+        console.log("Yuh")
+        router.push("/search?page=1&search=" + searchValue)
+    }
+
     function onSearchKeyDown(event) {
         if (event.key === 'Enter') {
-            console.log(searchValue)
+            router.push("/search?search=" + searchValue)
         }
     }
 
@@ -36,16 +61,21 @@ export default function Search({page}) {
             <NavBar title="Search"/>
             <section className={styles.content}>
                 <LogoImage />
-                {page == null &&
-                    <section className={styles.searchBarWrapper}>
-                        <input 
-                            className={styles.searchBar} 
-                            placeholder="Search for books here"
-                            value={searchValue}
-                            onChange={onSearchChange}
-                            onKeyDown={onSearchKeyDown}
-                        />
-                    </section>
+                <section className={styles.searchBarWrapper}>
+                    <input 
+                        className={styles.searchBar} 
+                        placeholder="Search for books here"
+                        value={searchValue}
+                        onChange={onSearchChange}
+                        onSubmit={onSearchSubmit}
+                        onKeyDown={onSearchKeyDown}
+                    />
+                </section>
+                {search != null && books != null && books.legth > 0 &&
+                    <BookList books={books} />
+                }
+                {search != null && (books == null || books.legth <= 0) && 
+                    <span className={styles.notFound}>Search can't be found</span>
                 }
             </section>
         </main>

@@ -32,7 +32,7 @@
 
 .bookImage {
     width: 95%;
-    height: clamp(280px, 30vh, 200px);
+    height: 260px;
     background-size: cover;
     border: 2px solid orange;
     box-shadow: 6px 6px black;
