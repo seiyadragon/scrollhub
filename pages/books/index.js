@@ -79,7 +79,7 @@ export function PageSelector({ page, pageCount }) {
         {page}
       </span>
 
-      {page <= pageCount ? (
+      {page < pageCount - 1 ? (
         <Link href={"/books?page=" + (parseInt(page) + 1)} scroll={false}>
           <span className={styles.pageSelectorItem}>{parseInt(page) + 1}</span>
         </Link>

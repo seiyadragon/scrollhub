@@ -1,0 +1,23 @@
+.content {
+    width:  50vw;
+    margin: auto;
+}
+
+.searchBarWrapper {
+    width: 100%;
+}
+
+.searchBar {
+    width: 100%;
+    font-size: 32px;
+    margin-top: 3vh;
+    background-color: burlywood;
+    border: solid 3px burlywood;
+    box-shadow: 6px 6px;
+    font-family: Caveat;
+}
+
+.searchBar:focus {
+    outline: none;
+    border: solid 3px orange;
+}

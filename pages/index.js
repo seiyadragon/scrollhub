@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Head from "next/head";
-import { FaBook, FaHome } from "react-icons/fa";
+import { FaBook, FaHome, FaSearch } from "react-icons/fa";
 import styles from "../styles/Home.module.css";
 
 export function NavBar({ title }) {
@@ -16,6 +16,9 @@ export function NavBar({ title }) {
       </Link>
       <Link href="/books?page=1">
         <FaBook className={styles.linkIcon} />
+      </Link>
+      <Link href="/search">
+        <FaSearch className={styles.linkIcon} />
       </Link>
     </section>
   );
