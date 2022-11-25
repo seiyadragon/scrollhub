@@ -5,6 +5,7 @@
 
 .searchBarWrapper {
     width: 100%;
+    text-align: center;
 }
 
 .searchBar {
@@ -15,6 +16,7 @@
     border: solid 3px burlywood;
     box-shadow: 6px 6px;
     font-family: Caveat;
+    margin-bottom: 3vh;
 }
 
 .searchBar:focus {

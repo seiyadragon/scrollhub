@@ -11,28 +11,57 @@ const supabase = createClient(
 );
 
 export async function getServerSideProps(context) {
-    let searchValue = context.query.search == null ? null : context.query.search
-    let {data, error} = supabase.from("Books").select("*")
+    let searchValue = context.query.search == null ? "" : context.query.search
+    
+    if (searchValue != "") {
+        var data = []
+        let shouldLoadMoreBooks = true
+        let bookRangeCounter = 0
+        while (shouldLoadMoreBooks) {
+            let {data: tmpData, err} = await supabase.from("Books").select().range(bookRangeCounter * 1000, (bookRangeCounter + 1) * 1000)
+
+            for (let value of tmpData) {
+                data.push(value)
+            }
+
+            if (tmpData.length < 1000)
+                shouldLoadMoreBooks = false
+
+            bookRangeCounter++
+        }
+    }
 
     let matchedBooks = []
-    data.map((value) => {
-        if (value.title.includes(search)) {
-            sortedBooks.push(value)
-        }
-        for (author in value.authors) {
-            if (author.includes(search)) {
-                sortedBooks.push(value)
-                break
-            }
-        }
-    })
+    if (searchValue != "") {
+        for (let value of data) {
+            let addToList = false
 
-    console.log(matchedBooks)
+            if (value.title != null && value.title.toLowerCase().includes(searchValue.toLowerCase())) 
+                addToList = true
 
+            for (let author in value.authors)
+                if (author.name != null && author.name.toLowerCase().includes(searchValue.toLowerCase()))
+                    addToList = true
+
+            for (let alreadyAdded in matchedBooks) 
+                if (alreadyAdded.id === value.id) 
+                    addToList = false
+
+            if (addToList) 
+                matchedBooks.push(value)
+        }
+    }
+
+    let filteredBooks = []
+    for (let matched in matchedBooks) 
+        for (let filtered in filteredBooks) 
+            if (parseInt(matched.id) != parseInt(filtered.id))
+                filteredBooks.push(matched)
+        
     return {
         props: {
             search: searchValue,
-            books: matchedBooks,
+            books: filteredBooks
         }
     }
 }
@@ -46,15 +75,18 @@ export default function Search({search, books}) {
     }
 
     function onSearchSubmit(event) {
-        console.log("Yuh")
+        setSearchValue("")
         router.push("/search?page=1&search=" + searchValue)
     }
 
     function onSearchKeyDown(event) {
         if (event.key === 'Enter') {
+            setSearchValue("")
             router.push("/search?search=" + searchValue)
         }
     }
+
+    console.log(books)
 
     return (
         <main>
@@ -70,12 +102,12 @@ export default function Search({search, books}) {
                         onSubmit={onSearchSubmit}
                         onKeyDown={onSearchKeyDown}
                     />
+                    {books.length == 0 && 
+                        <span className={styles.notFound}>Search can't be found</span>
+                    }
                 </section>
-                {search != null && books != null && books.legth > 0 &&
+                {search != null &&
                     <BookList books={books} />
-                }
-                {search != null && (books == null || books.legth <= 0) && 
-                    <span className={styles.notFound}>Search can't be found</span>
                 }
             </section>
         </main>
