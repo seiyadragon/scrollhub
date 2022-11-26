@@ -60,11 +60,6 @@ export async function getServerSideProps(context) {
             if (addToList) 
                 matchedBooks.push(value)
         }
-
-        console.log(matchedBooks.length)
-
-        matchedBooks = Array.from(new Set(matchedBooks))
-        console.log(matchedBooks.length)
     }
         
     return {
@@ -94,8 +89,6 @@ export default function Search({search, books}) {
             router.push("/search?search=" + searchValue)
         }
     }
-
-    console.log(books)
 
     return (
         <main>
