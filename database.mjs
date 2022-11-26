@@ -25,8 +25,8 @@ async function run() {
 }
 
 function addPage(gutendex, page) {
-    gutendex.results.map(async (book, index) => {
-        await supabase.from("Books").insert({
+    gutendex.results.map(async (book) => {
+        let myBook = {
             id: book.id,
             title: book.title,
             authors: book.authors,
@@ -36,9 +36,12 @@ function addPage(gutendex, page) {
             languages: book.languages,
             copyright: book.copyright,
             formats: book.formats,
-            page: page
-        })
-        console.log(book)
+            page: page,
+            mediaType: book.media_type
+        }
+        await supabase.from("Books").insert(myBook)
+
+        console.log(myBook)
     })
 }
 

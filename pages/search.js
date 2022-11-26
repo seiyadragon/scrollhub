@@ -2,7 +2,7 @@ import styles from "../styles/Search.module.css";
 import { createClient } from "@supabase/supabase-js";
 import { LogoImage, NavBar } from ".";
 import { useState } from "react";
-import { BookList, PageSelector } from "./books";
+import { BookList } from "./books";
 import { useRouter } from "next/router";
 
 const supabase = createClient(
@@ -79,13 +79,11 @@ export default function Search({search, books}) {
     }
 
     function onSearchSubmit(event) {
-        setSearchValue("")
         router.push("/search?page=1&search=" + searchValue)
     }
 
     function onSearchKeyDown(event) {
         if (event.key === 'Enter') {
-            setSearchValue("")
             router.push("/search?search=" + searchValue)
         }
     }
@@ -105,7 +103,7 @@ export default function Search({search, books}) {
                         onKeyDown={onSearchKeyDown}
                     />
                     {books.length == 0 && search != "" &&
-                        <span className={styles.notFound}>Search can't be found</span>
+                        <span className={styles.notFound}>Search can't be found...</span>
                     }
                 </section>
                 {search != "" && search.length > 0 &&

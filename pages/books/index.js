@@ -2,6 +2,7 @@ import styles from "../../styles/Books.module.css";
 import Link from "next/link";
 import { LogoImage, NavBar } from "..";
 import { createClient } from "@supabase/supabase-js";
+import { FaVolumeUp } from "react-icons/fa";
 
 const supabase = createClient(
   "https://psffjnyfrkdpfafzdiwg.supabase.co",
@@ -27,30 +28,31 @@ export async function getServerSideProps(context) {
 }
 
 export function Book({ book }) {
-  let imageNull = false;
-  if (book.formats["image/jpeg"] == null) imageNull = true;
-
   return (
-    <section className={styles.bookContainer}>
-      <Link className={styles.book_link} href={"books/" + book.id}>
-        <section
-          className={styles.bookImage}
-          style={{ backgroundImage: `url(${book.formats["image/jpeg"]})` }}
-        >
-          {book.formats["image/jpeg"] == null && (
-            <section className={styles.noImageBook}>
-              {book.title != null && <span>{book.title}</span>}
-              <br />
-              {book.authors[0] != null && <span>{book.authors[0].name}</span>}
-              <br />
-              {book.translators[0] != null && (
-                <span>{book.translators[0].name}</span>
-              )}
-            </section>
-          )}
-        </section>
-      </Link>
-    </section>
+    <Link className={styles.book_link} href={"books/" + book.id}>
+      <section
+        className={styles.bookImage}
+        style={{ backgroundImage: `url(${book.formats["image/jpeg"]})` }}
+      >
+        {book.formats["image/jpeg"] == null && (
+          <section className={styles.noImageBook}>
+            {book.title != null && <span>{book.title}</span>}
+            <br />
+            {book.authors[0] != null && <span>{book.authors[0].name}</span>}
+            <br />
+            {book.translators[0] != null && (
+              <span>{book.translators[0].name}</span>
+            )}
+            <br />
+            {book.mediaType === "Sound" &&
+              <section className={styles.audioIndicator}>
+                <span><FaVolumeUp /></span>
+              </section>
+            }
+          </section>
+        )}
+      </section>
+    </Link>
   );
 }
 
