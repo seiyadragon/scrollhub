@@ -121,7 +121,7 @@ export default function Books({ books, page, pageCount }) {
       <section className={styles.container}>
         <LogoImage />
         <PageSelector page={page} pageCount={pageCount} />
-        <BookList books={books} />
+        <BookList books={books}/>
         <PageSelector page={page} pageCount={pageCount} />
       </section>
     </main>

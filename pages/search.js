@@ -18,10 +18,20 @@ export async function getServerSideProps(context) {
         let shouldLoadMoreBooks = true
         let bookRangeCounter = 0
         while (shouldLoadMoreBooks) {
-            let {data: tmpData, err} = await supabase.from("Books").select().range(bookRangeCounter * 1000, (bookRangeCounter + 1) * 1000)
+            let {data: tmpData, err} = await supabase.from("Books").select().range(bookRangeCounter * 1000, ((bookRangeCounter + 1) * 1000) - 1)
 
             for (let value of tmpData) {
-                data.push(value)
+                let found = false
+
+                for (let value2 of data) {
+                    if (value.id === value2.id)
+                        found = true
+                }
+
+                if (found)
+                    continue
+
+                else data.push(value)
             }
 
             if (tmpData.length < 1000)
@@ -44,24 +54,23 @@ export async function getServerSideProps(context) {
                     addToList = true
 
             for (let alreadyAdded in matchedBooks) 
-                if (alreadyAdded.id === value.id) 
+                if (parseInt(alreadyAdded.id) == parseInt(value.id)) 
                     addToList = false
 
             if (addToList) 
                 matchedBooks.push(value)
         }
-    }
 
-    let filteredBooks = []
-    for (let matched in matchedBooks) 
-        for (let filtered in filteredBooks) 
-            if (parseInt(matched.id) != parseInt(filtered.id))
-                filteredBooks.push(matched)
+        console.log(matchedBooks.length)
+
+        matchedBooks = Array.from(new Set(matchedBooks))
+        console.log(matchedBooks.length)
+    }
         
     return {
         props: {
             search: searchValue,
-            books: filteredBooks
+            books: matchedBooks
         }
     }
 }
@@ -102,12 +111,12 @@ export default function Search({search, books}) {
                         onSubmit={onSearchSubmit}
                         onKeyDown={onSearchKeyDown}
                     />
-                    {books.length == 0 && 
+                    {books.length == 0 && search != "" &&
                         <span className={styles.notFound}>Search can't be found</span>
                     }
                 </section>
-                {search != null &&
-                    <BookList books={books} />
+                {search != "" && search.length > 0 &&
+                    <BookList books={books}/>
                 }
             </section>
         </main>
